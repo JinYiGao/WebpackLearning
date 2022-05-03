@@ -1,0 +1,51 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: JinYiGao
+ * @Date: 2022-03-25 22:50:56
+ * @LastEditors: JinYiGao
+ * @LastEditTime: 2022-03-25 23:32:57
+ */
+const {resolve} = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    entry: './src/index.js',
+    output: {
+        // 文件名称(可以指定名称 + 目录)
+        filename: 'js/[name].js',
+        // 指定输出文件目录(将来所有资源输出的公共目录)
+        path: resolve(__dirname, 'build'),
+    },
+    module: {
+        rules: [
+            {
+                test:/\.css$/,
+                // 多个loader用use
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.js$/,
+                // 排除文件
+                exclude: /node_modules/,
+                // 只检查src下的js文件
+                include: resolve(__dirname, 'src'),
+                // 优先执行
+                enforce: 'pre',
+                // 延后执行
+                // enforce: 'post',
+                // 单个loader用loader
+                loader: 'eslint-loader'
+            },
+            {
+                // 每个不同类型的文件在loader转换时，都会被命中，遍历module中rules中所有loader
+                // oneOf 只要匹配即退出
+                oneOf:[]
+            }
+        ]
+    },
+    plugins:[
+        new HtmlWebpackPlugin()
+    ],
+    mode: 'development'
+}

@@ -1,0 +1,6 @@
+/*!*************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js!../node_modules/postcss-loader/dist/cjs.js!./src/css/a.css ***!
+  \*************************************************************************************************************/#box1{-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;backface-visibility:hidden;background-color:pink;display:-webkit-box;display:-webkit-flex;display:-moz-box;display:flex;height:100px;width:100px}
+/*!*************************************************************************************************************!*\
+  !*** css ../node_modules/css-loader/dist/cjs.js!../node_modules/postcss-loader/dist/cjs.js!./src/css/b.css ***!
+  \*************************************************************************************************************/#box2{background-color:#000;height:200px;width:200px}

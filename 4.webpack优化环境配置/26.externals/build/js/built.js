@@ -1,0 +1,1 @@
+!function(){"use strict";jquery,console.log(5)}();

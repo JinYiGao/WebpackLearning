@@ -1,0 +1,85 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: JinYiGao
+ * @Date: 2022-03-23 15:24:04
+ * @LastEditors: JinYiGao
+ * @LastEditTime: 2022-03-25 23:59:21
+ */
+
+ const {resolve} = require('path');
+ const HtmlWebpaclPlugin = require('html-webpack-plugin');
+ 
+ module.exports = {
+     entry: './src/index.js',
+     output: {
+         filename: 'built.js',
+         path: resolve(__dirname, 'build')
+     },
+     module:{
+         rules:[
+             {
+                 test: /\.css$/,
+                 use: [
+                     'style-loader',
+                     'css-loader'
+                 ]
+             },
+             // 打包其他资源，除了html/js/css 以外的其他资源
+             // Webpack5用法
+             {
+                 exclude: /\.(css|js|html)/,
+                 type: 'asset/resource'
+             }
+         ]
+     },
+     plugins:[
+         new HtmlWebpaclPlugin({
+             template: './src/index.html'
+         })
+     ],
+     mode: 'development',
+
+     // 开发服务器 devServer: (用来自动化编译，自动打开浏览器，自动刷新浏览器)
+     // 特点: 只会在内存中编译打包, 不会有任何输出
+     devServer:{
+         // --- 运行代码的目录 --- 
+         // Webpack4用法
+         // contentBase: resolve(__dirname, 'build'),
+         // Webpack5用法
+         static: resolve(__dirname, 'build'),
+         // 监视运行目录下的所有文件
+         watchcontentBase: true,
+         watchOptions: {
+             // 忽略监视的文件
+             ignored: /node_modules/
+         },
+         // 启动gzip压缩, 使代码体积更小，启动更快
+         compress: true,
+         // 端口号
+         port: 3000,
+         // 域名
+         host: 'localhost',
+         // 自动打开浏览器
+         open: true,
+         // 开启HMR功能 webpack5自动开启
+         hot: true,
+         // 不需要显示启动服务器日志
+         clientLogLevel: 'none',
+         // 除了一些基本启动信息以外,其他内容都不要打印
+         quiet: 'true',
+         // 如果出现错误,不要全屏提示~
+         overlay: false,
+         // 服务器代理 --> 解决开发环境下跨域问题
+         proxy: {
+             // 一旦devServer(port:5000)服务器接收到/api/xxx的请求, 就会把请求转发到另外一个服务器(port:3000)
+             '/api': {
+                 target: 'http://localhost:3000',
+                 // 发送请求时,请求路径重写: 将api/xxx --> /xxx(去掉/api)
+                 pathRewrite: {
+                     '^/api' : ''
+                 }
+             }
+         }
+     }
+ }
